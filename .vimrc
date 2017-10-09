@@ -8,9 +8,9 @@
 " gv :pour reselectionner la derniere visual
 " ctrl+n/p pour la completion
 " mode ctrl+x terrible !
-" :fold reduire les blocs d'instructions 
+" :fold reduire les blocs d'instructions
 " zz me replacer au centre de l'ecran en restant au même endroit dans le text (pas M car il ne deplace pas le text)
-" copie le buffer (issue d'un y) dans la ligne de commande. (Tip #383) \cr" 
+" copie le buffer (issue d'un y) dans la ligne de commande. (Tip #383) \cr"
 " revenir a la derniere modification '.
 " inverser les ligne d'une selection (sauf la premiere): :'<,'>g/./m'<
 " }
@@ -57,7 +57,7 @@ set showmatch
 " remove change the following statements
 set nocompatible	" Use Vim defaults (much better!)
 set backspace=2		" allow backspacing over everything in insert mode
-" Now we set some defaults for the editor 
+" Now we set some defaults for the editor
 set autoindent		" always set autoindenting on
 set textwidth=0		" Don't wrap words by default
 set nobackup		" Don't keep a backup file
@@ -81,9 +81,9 @@ if &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
 endif
 
 " Vim5 comes with syntaxhighlighting. If you want to enable syntaxhightlighting
-" by default uncomment the next three lines. 
+" by default uncomment the next three lines.
 "if has("syntax")
-"  syntax on		" Default to no syntax highlightning 
+"  syntax on		" Default to no syntax highlightning
 "endif
 
 
@@ -107,7 +107,7 @@ augroup END
 " augroup gzip
 "   " Remove all gzip autocommands
 "   au!
-" 
+"
 "   " Enable editing of gzipped files
 "   "	  read:	set binary mode before reading the file
 "   "		uncompress text in buffer after reading
@@ -119,20 +119,20 @@ augroup END
 "   autocmd BufReadPost,FileReadPost	*.gz set nobin
 "   autocmd BufReadPost,FileReadPost	*.gz let &ch = ch_save|unlet ch_save
 "   autocmd BufReadPost,FileReadPost	*.gz execute ":doautocmd BufReadPost " . expand("%:r")
-" 
+"
 "   autocmd BufWritePost,FileWritePost	*.gz !mv <afile> <afile>:r
 "   autocmd BufWritePost,FileWritePost	*.gz !gzip <afile>:r
-" 
+"
 "   autocmd FileAppendPre			*.gz !gunzip <afile>
 "   autocmd FileAppendPre			*.gz !mv <afile>:r <afile>
 "   autocmd FileAppendPost		*.gz !mv <afile> <afile>:r
 "   autocmd FileAppendPost		*.gz !gzip <afile>:r
 " augroup END
-" 
+"
 " augroup bzip2
 "   " Remove all bzip2 autocommands
 "   au!
-" 
+"
 "   " Enable editing of bzipped files
 "   "       read: set binary mode before reading the file
 "   "             uncompress text in buffer after reading
@@ -143,10 +143,10 @@ augroup END
 "   autocmd BufReadPost,FileReadPost      *.bz2 |'[,']!bunzip2
 "   autocmd BufReadPost,FileReadPost      *.bz2 let &ch = ch_save|unlet ch_save
 "   autocmd BufReadPost,FileReadPost      *.bz2 execute ":doautocmd BufReadPost " . expand("%:r")
-" 
+"
 "   autocmd BufWritePost,FileWritePost    *.bz2 !mv <afile> <afile>:r
 "   autocmd BufWritePost,FileWritePost    *.bz2 !bzip2 <afile>:r
-" 
+"
 "   autocmd FileAppendPre                 *.bz2 !bunzip2 <afile>
 "   autocmd FileAppendPre                 *.bz2 !mv <afile>:r <afile>
 "   autocmd FileAppendPost                *.bz2 !mv <afile> <afile>:r
@@ -251,7 +251,7 @@ vnoremap <TAB> >
 "inoremap  <esc>O
 "inoremap  <esc>o
 
-" Editer le .vimrc 
+" Editer le .vimrc
 nnoremap ;v :split ~/.vimrc " <CR>:source ~/.vimrc<CR>
 " Reload le .vimrc sans quitter vim
 " autocmd BufLeave .vimrc :source ~/.vimrc<CR>
@@ -261,9 +261,6 @@ nnoremap ;v :split ~/.vimrc " <CR>:source ~/.vimrc<CR>
 " highlight Search      term=reverse ctermbg=2 guibg=Yellow
 " highlight Pmenu      ctermbg=1 guibg=Red
 " highlight PmenuSel   ctermbg=2 ctermfg=4 guibg=Green
-
-highlight ColorColumn ctermbg=darkgray
-" set textwidth=80
 
 " autocmd FileType c,cpp,java let &colorcolumn=join(range(&textwidth+1,999),",")
 " set colorcolumn=+1
@@ -305,11 +302,6 @@ noremap Oc :bn<cr>
 
 
 
-" highlight Normal	ctermfg=white ctermbg=black
-"highlight Folded	ctermfg=blue ctermbg=black
-"highlight Search term=reverse ctermbg=blue ctermfg=White guibg=blue guifg=White
-"highlight Visual term=reverse ctermbg=blue gui=reverse guifg=Grey guibg=fg
-"highlight WildMenu term=standout ctermbg=Black ctermfg=blue guibg=Yellow guifg=blue
 set dictionary=~/.vim/dictionary
 " syntax keyword  Moi michoux MichouX
 " hi Moi term=reverse ctermbg=red ctermfg=blue guibg=red guifg=blue
@@ -434,15 +426,33 @@ hi Visual       ctermfg=11 ctermbg=4
 hi DiffChange   term=reverse ctermbg=225 ctermfg=1 guibg=LightMagenta
 hi DiffText     term=reverse ctermbg=9 ctermfg=5 gui=bold guibg=Red
 hi DiffAdd      term=bold ctermbg=81 guibg=LightBlue ctermfg=2
-hi Pmenu        ctermbg=225 guibg=LightMagenta ctermfg=2 
+hi Pmenu        ctermbg=225 guibg=LightMagenta ctermfg=2
 hi PmenuSel     ctermbg=7 guibg=Grey ctermfg=1
 hi PmenuSbar    ctermbg=248 guibg=Grey ctermfg=4
 hi StatusLineNC ctermbg=0
 " hi StatusLineNC ctermfg=8 ctermbg=0
 hi StatusLine   ctermfg=15 ctermbg=5
 hi DiffAdd      term=bold ctermfg=2 ctermbg=0
-hi CursorLine cterm=NONE ctermbg=0
+hi CursorLine   cterm=NONE ctermbg=0
+highlight Search term=reverse cterm=bold ctermfg=61 ctermbg=0
+highlight Cursor   guifg=red  guibg=black
+highlight iCursor  guifg=white  guibg=steelblue
+highlight ColorColumn ctermbg=0
+" highlight Comment  term=bold ctermfg=cyan
+" highlight Comment ctermfg=13
+"let g:showmarks_textlower="\t>"
+hi default ShowMarksHLl ctermfg=green ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+hi default ShowMarksHLu ctermfg=green ctermbg=yellow cterm=bold guifg=blue guibg=lightblue gui=bold
+hi default ShowMarksHLo ctermfg=green ctermbg=red cterm=bold guifg=blue guibg=lightblue gui=bold
+hi default ShowMarksHLm ctermfg=green ctermbg=cyan cterm=bold guifg=blue guibg=lightblue gui=bold
+" highlight WildMenu term=standout ctermbg=Black ctermfg=blue guibg=Yellow guifg=blue
 """ End -- colorscheme manxome amend
+
+
+" Extra whitespaces highlighting
+" Highlight trailing whitespaces and spaces followed by tabs
+highlight ExtraWhitespace ctermbg=darkred
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 "noremap H :e %
 "noremap h :e <c-r>%<c-w>h<cr>
@@ -465,21 +475,8 @@ hi CursorLine cterm=NONE ctermbg=0
 let g:CommandTMaxFiles=50000
 " set wildignore+=cts,out
 
-nnoremap ;vide gg<CR>/^$<CR>
 set nostartofline   " don't jump to first character when paging
 nmap <C-N> nzb
-
-" Extra whitespaces highlighting
-" Highlight trailing whitespaces and spaces followed by tabs
-highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
-
-highlight Search term=reverse cterm=bold ctermfg=61 ctermbg=0
-highlight Cursor   guifg=red  guibg=black
-highlight iCursor  guifg=white  guibg=steelblue 
-highlight ColorColumn ctermbg=darkgray
-" highlight Comment  term=bold ctermfg=cyan
-" highlight Comment ctermfg=13
 
 " Expand tabs for java
 autocmd FileType java setlocal expandtab
@@ -498,11 +495,6 @@ Helptags
 
 runtime ftplugin/man.vim
 noremap K :Man <cword><CR>
-"let g:showmarks_textlower="\t>"
-hi default ShowMarksHLl ctermfg=green ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
-hi default ShowMarksHLu ctermfg=green ctermbg=yellow cterm=bold guifg=blue guibg=lightblue gui=bold
-hi default ShowMarksHLo ctermfg=green ctermbg=red cterm=bold guifg=blue guibg=lightblue gui=bold
-hi default ShowMarksHLm ctermfg=green ctermbg=cyan cterm=bold guifg=blue guibg=lightblue gui=bold
 
 " call QuickfixsignsToggle()
 let g:quickfixsigns_lists = {}
