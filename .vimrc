@@ -542,3 +542,21 @@ function! s:align()
 endfunction
 
 let g:airline_theme = "oux"
+
+""""""""""""""""""""""""""
+" python
+
+" PIP8:
+au BufNewFile,BufRead *.py :
+            \ set tabstop=4 |
+            \ set softtabstop=4 |
+            \ set shiftwidth=4 |
+            \ set textwidth=79 |
+            \ set expandtab |
+            \ set autoindent |
+            \ set fileformat=unix
+
+let g:pymode_python = 'python3'
+let g:pymode = 1
+let g:pymode_lint = 1
+let g:pymode_lint_on_write = 1
