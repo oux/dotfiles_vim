@@ -273,6 +273,10 @@ map! [7~ <Home>
 map! [8~ <End>
 map [7~ <Home>
 map [8~ <End>
+map [11~ <F1>
+map [12~ <F2>
+map [13~ <F3>
+map [14~ <F4>
 cmap <Esc>b <S-Left>
 cmap <Esc>f <S-Right>
 "cmap <C-Right> <S-Right>
@@ -375,7 +379,7 @@ command! -nargs=1 Silent
             \ | execute ':redraw!'
 
 "noremap  <C-]>
-cnoremap  <CR>
+"cnoremap  <CR>
 " :lolder to reopen old searches
 map <F1> :execute "lvimgrep! /" . @/ . "/j %" <Bar>botright lw<CR>
 " map <F1> :execute "lclose" <Bar> call setloclist(0,[])<CR>
@@ -560,3 +564,7 @@ let g:pymode_python = 'python3'
 let g:pymode = 1
 let g:pymode_lint = 1
 let g:pymode_lint_on_write = 1
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+autocmd CompleteDone * pclose
