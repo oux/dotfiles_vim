@@ -277,6 +277,10 @@ map [11~ <F1>
 map [12~ <F2>
 map [13~ <F3>
 map [14~ <F4>
+map [23~ <S-F1>
+map [24~ <S-F2>
+map [25~ <S-F3>
+map [26~ <S-F4>
 cmap <Esc>b <S-Left>
 cmap <Esc>f <S-Right>
 "cmap <C-Right> <S-Right>
@@ -382,15 +386,16 @@ command! -nargs=1 Silent
 "cnoremap  <CR>
 " :lolder to reopen old searches
 map <F1> :execute "lvimgrep! /" . @/ . "/j %" <Bar>botright lw<CR>
-" map <F1> :execute "lclose" <Bar> call setloclist(0,[])<CR>
-" Search word on current file
-map <F2> :execute "lvimgrep! /" . expand("<cword>") . "/j %" <Bar>botright lw<CR>
+map <S-F1> :execute "lvimgrep! /" . expand("<cword>") . "/j %" <Bar>botright lw<CR>
 "can be done with: :g/mypattern/caddexpr expand("%") . ":" . line(".") .  ":" . getline(".")
-" Search word on current directory
-map <F3> :execute "lvimgrep! /" . expand("<cword>") . "/j %:h/*"  <Bar>botright lw<cr>
+" Search word on current buffer's directory
+map <F2> :execute "lvimgrep! /" . @/ . "/j %:h/*"  <Bar>botright lw<cr>
+map <S-F2> :execute "lvimgrep! /" . expand("<cword>") . "/j %:h/*"  <Bar>botright lw<cr>
 " map <F3> :execute "silent lgrepadd! " . expand("<cword>") . " %:h/*" <Bar>:redraw! <Bar>botright lw<cr>
-" Search word on current directory and all subdirectories
-map <F4> :execute "lvimgrep! /" . expand("<cword>") . "/j %:h/**" <Bar>botright lw<CR>
+" Search word on current vim's directory and all subdirectories
+map <F3> :execute "lvimgrep! /" . @/ . "/j **" <Bar>botright lw<CR>
+map <S-F3> :execute "lvimgrep! /" . expand("<cword>") . "/j **" <Bar>botright lw<CR>
+map <F4> :execute "lclose" <Bar> call setloclist(0,[])<CR>
 noremap <F5> :e!<cr>
 noremap <F6> :set list!<cr>:set list?<cr>
 noremap <F7> :set foldenable!<cr>:set foldenable?<cr>
