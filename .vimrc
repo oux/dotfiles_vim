@@ -264,7 +264,6 @@ nnoremap ;v :split ~/.vimrc " <CR>:source ~/.vimrc<CR>
 
 " autocmd FileType c,cpp,java let &colorcolumn=join(range(&textwidth+1,999),",")
 " set colorcolumn=+1
-
 " To be able to use mouse cursor up to 222 column
 "set ttymouse=urxvt
 "set ttymouse=xterm2
@@ -567,8 +566,10 @@ au BufNewFile,BufRead *.py :
 
 let g:pymode_python = 'python3'
 let g:pymode = 1
-let g:pymode_lint = 1
-let g:pymode_lint_on_write = 1
+let g:pymode_lint = 0
+let g:pymode_lint_on_write = 0
+let g:pymode_options_max_line_length = 110
+let g:pymode_syntax = 1
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
