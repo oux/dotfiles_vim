@@ -181,9 +181,9 @@ set nobackup
 syntax on
 
 autocmd BufRead *.votl set foldenable
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature*,signature* set ft=mail
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature*,signature* set nomodeline
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature*,signature* set noautoindent
+autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set ft=mail
+autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set nomodeline
+autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set noautoindent
 autocmd BufRead .followup,.article*,.letter,/tmp/mutt* normal ;vide
 
 " pour la prog avec mots clés
@@ -258,7 +258,7 @@ nnoremap ;v :split ~/.vimrc " <CR>:source ~/.vimrc<CR>
 " autocmd BufWritePost ~/.vimrc :source ~/.vimrc
 
 "marche pas sur deb apparement...
-" highlight Search      term=reverse ctermbg=2 guibg=Yellow
+" highlight Search      term=reverse ctermbg=3 guibg=Yellow
 " highlight Pmenu      ctermbg=1 guibg=Red
 " highlight PmenuSel   ctermbg=2 ctermfg=4 guibg=Green
 
@@ -428,24 +428,38 @@ hi clear Folded
 hi Folded       ctermbg=232 cterm=bold ctermfg=5
 hi FoldColumn   ctermbg=232 ctermfg=6
 "highlight Folded ctermfg=darkblue
-hi Search       ctermfg=0 ctermbg=11
 hi MatchParen   ctermbg=14 ctermfg=2
 hi Visual       ctermfg=11 ctermbg=4
-hi DiffChange   term=reverse ctermbg=225 ctermfg=1 guibg=LightMagenta
-hi DiffText     term=reverse ctermbg=9 ctermfg=5 gui=bold guibg=Red
-hi DiffAdd      term=bold ctermbg=81 guibg=LightBlue ctermfg=2
-hi Pmenu        ctermbg=225 guibg=LightMagenta ctermfg=2
+"hi DiffChange   term=reverse ctermbg=225 ctermfg=1 guibg=Magenta
+"hi DiffText     term=reverse ctermbg=10 ctermfg=1 gui=bold guibg=Red
+"hi DiffAdd      term=bold ctermbg=81 guibg=LightBlue ctermfg=2
+" to test:
+hi DiffAdd        term=bold ctermfg=229 ctermbg=0 guibg=DarkBlue
+hi DiffChange     term=bold ctermbg=2 guibg=DarkMagenta
+"hi DiffText   term=reverse cterm=bold ctermfg=1 ctermbg=10 gui=bold guibg=Red
+" Original manxome:
+"hi DiffChange     term=bold ctermbg=5 guibg=DarkMagenta
+"hi DiffText       term=reverse cterm=bold ctermbg=9 gui=bold guibg=Red
+"hi DiffAdd        term=bold ctermfg=2 ctermbg=0 guibg=DarkBlue
+hi Pmenu        ctermfg=225 guibg=LightMagenta ctermfg=2
 hi PmenuSel     ctermbg=7 guibg=Grey ctermfg=1
 hi PmenuSbar    ctermbg=248 guibg=Grey ctermfg=4
-hi StatusLineNC ctermbg=0
-" hi StatusLineNC ctermfg=8 ctermbg=0
-hi StatusLine   ctermfg=15 ctermbg=5
+hi StatusLine   ctermfg=15 ctermbg=239
+hi StatusLineNC ctermbg=237
 hi DiffAdd      term=bold ctermfg=2 ctermbg=0
 hi CursorLine   cterm=NONE ctermbg=0
-highlight Search term=reverse cterm=bold ctermfg=61 ctermbg=0
-highlight Cursor   guifg=red  guibg=black
-highlight iCursor  guifg=white  guibg=steelblue
-highlight ColorColumn ctermbg=0
+hi CursorLine   cterm=NONE ctermbg=234
+" xterm:
+hi Search term=reverse cterm=bold ctermfg=3 ctermbg=61
+" hi Search term=reverse cterm=bold ctermfg=61 ctermbg=240
+hi Directory ctermfg=10
+hi EndOfBuffer ctermfg=10
+hi NonText ctermfg=10
+hi Cursor   guifg=red  guibg=black
+hi iCursor  guifg=white  guibg=steelblue
+" hi ColorColumn ctermbg=0
+hi ColorColumn ctermbg=234
+hi Identifier ctermfg=6
 " highlight Comment  term=bold ctermfg=cyan
 " highlight Comment ctermfg=13
 "let g:showmarks_textlower="\t>"
@@ -454,6 +468,7 @@ hi default ShowMarksHLu ctermfg=green ctermbg=yellow cterm=bold guifg=blue guibg
 hi default ShowMarksHLo ctermfg=green ctermbg=red cterm=bold guifg=blue guibg=lightblue gui=bold
 hi default ShowMarksHLm ctermfg=green ctermbg=cyan cterm=bold guifg=blue guibg=lightblue gui=bold
 " highlight WildMenu term=standout ctermbg=Black ctermfg=blue guibg=Yellow guifg=blue
+hi Identifier ctermfg=5
 """ End -- colorscheme manxome amend
 
 
@@ -526,11 +541,11 @@ let g:airline_theme='hybridline'
 "let g:airline_symbols.space = "\ua0"
 "set t_Co=256
 "echo &t_Co
-if has('cscope')
-        if has('quickfix')
-            set cscopequickfix=s-,c-,d-,i-,t-,e-,g-
-        endif
-endif
+"if has('cscope')
+"        if has('quickfix')
+"            set cscopequickfix=s+,c+,d+,i+,t+,e+,a+
+"        endif
+"endif
 
 autocmd FileType qf setlocal nowrap
 autocmd BufReadPost * :QuickfixsignsDisable
@@ -574,3 +589,12 @@ let g:pymode_syntax = 1
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
 autocmd CompleteDone * pclose
+
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+
+set belloff=all
