@@ -40,15 +40,9 @@
 [submodule ".vim/bundle/vim-bookmarks"]
 	path = .vim/bundle/vim-bookmarks
 	url = https://github.com/MattesGroeger/vim-bookmarks.git
-[submodule ".vim/bundle/vim-coffee-script"]
-	path = .vim/bundle/vim-coffee-script
-	url = https://github.com/kchmck/vim-coffee-script.git
 [submodule ".vim/bundle/indentLine"]
 	path = .vim/bundle/indentLine
 	url = https://github.com/Yggdroot/indentLine
-[submodule ".vim/bundle/gundo"]
-	path = .vim/bundle/gundo
-	url = https://github.com/sjl/gundo.vim.git
 [submodule ".vim/bundle/vim-less"]
 	path = .vim/bundle/vim-less
 	url = https://github.com/groenewege/vim-less
@@ -71,3 +65,9 @@
 [submodule ".vim/bundle/unicode"]
 	path = .vim/bundle/unicode
 	url = https://github.com/chrisbra/unicode.vim
+[submodule ".vim/bundle/jedi-vim"]
+	path = .vim/bundle/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim
+[submodule ".vim/bundle/bufexplorer.vim"]
+	path = .vim/bundle/bufexplorer.vim
+	url = https://github.com/jlanzarotta/bufexplorer.git
