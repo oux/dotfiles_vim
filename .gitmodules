@@ -71,3 +71,6 @@
 [submodule ".vim/bundle/bufexplorer.vim"]
 	path = .vim/bundle/bufexplorer.vim
 	url = https://github.com/jlanzarotta/bufexplorer.git
+[submodule ".vim/bundle/mru"]
+	path = .vim/bundle/mru
+	url = https://github.com/yegappan/mru

@@ -104,30 +104,30 @@ augroup END
 
 " " Also, support editing of gzip-compressed files. DO NOT REMOVE THIS!
 " " This is also used when loading the compressed helpfiles.
-" augroup gzip
-"   " Remove all gzip autocommands
-"   au!
-"
-"   " Enable editing of gzipped files
-"   "	  read:	set binary mode before reading the file
-"   "		uncompress text in buffer after reading
-"   "	 write:	compress file after writing
-"   "	append:	uncompress file, append, compress file
-"   autocmd BufReadPre,FileReadPre	*.gz set bin
-"   autocmd BufReadPre,FileReadPre	*.gz let ch_save = &ch|set ch=2
-"   autocmd BufReadPost,FileReadPost	*.gz '[,']!gunzip
-"   autocmd BufReadPost,FileReadPost	*.gz set nobin
-"   autocmd BufReadPost,FileReadPost	*.gz let &ch = ch_save|unlet ch_save
-"   autocmd BufReadPost,FileReadPost	*.gz execute ":doautocmd BufReadPost " . expand("%:r")
-"
-"   autocmd BufWritePost,FileWritePost	*.gz !mv <afile> <afile>:r
-"   autocmd BufWritePost,FileWritePost	*.gz !gzip <afile>:r
-"
-"   autocmd FileAppendPre			*.gz !gunzip <afile>
-"   autocmd FileAppendPre			*.gz !mv <afile>:r <afile>
-"   autocmd FileAppendPost		*.gz !mv <afile> <afile>:r
-"   autocmd FileAppendPost		*.gz !gzip <afile>:r
-" augroup END
+augroup whl
+  " Remove all gzip autocommands
+  au!
+
+  " Enable editing of gzipped files
+  "	  read:	set binary mode before reading the file
+  "		uncompress text in buffer after reading
+  "	 write:	compress file after writing
+  "	append:	uncompress file, append, compress file
+  autocmd BufReadPre,FileReadPre	*.whl set bin
+  autocmd BufReadPre,FileReadPre	*.whl let ch_save = &ch|set ch=2
+  autocmd BufReadPost,FileReadPost	*.whl '[,']!unzip
+  autocmd BufReadPost,FileReadPost	*.whl set nobin
+  autocmd BufReadPost,FileReadPost	*.whl let &ch = ch_save|unlet ch_save
+  autocmd BufReadPost,FileReadPost	*.whl execute ":doautocmd BufReadPost " . expand("%:r")
+
+  autocmd BufWritePost,FileWritePost	*.whl !mv <afile> <afile>:r
+  autocmd BufWritePost,FileWritePost	*.whl !zip <afile>:r
+
+  autocmd FileAppendPre			*.whl !unzip <afile>
+  autocmd FileAppendPre			*.whl !mv <afile>:r <afile>
+  autocmd FileAppendPost		*.whl !mv <afile> <afile>:r
+  autocmd FileAppendPost		*.whl !zip <afile>:r
+augroup END
 "
 " augroup bzip2
 "   " Remove all bzip2 autocommands
@@ -199,8 +199,8 @@ autocmd BufRead *.mk set ts=2
 autocmd BufRead *.mk set sw=2
 
 " commente/decommenter auto
-autocmd BufEnter *.sh,*.pl,*rc vmap ;com :s/^/# /<CR>
-autocmd BufEnter *.sh,*.pl,*rc vmap ;uncom :s/^#[<TAB> ]//<CR>
+autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;com :s/^\s*/&# /<CR>
+autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;uncom :s/^\(\s*\)#[<TAB> ]\(.*\)/\1\2/<CR>
 autocmd BufEnter *.htm,*.html,*.xml,*.wml vmap ;com :<backspace><backspace><backspace><cr>O<!--<esc>:'><cr>o--><esc>
 autocmd BufEnter *.html,*.php,*.php3 vmap ;table :<backspace><backspace><backspace><cr>O<table><esc>:'><cr>o</table><esc>
 autocmd BufEnter *.html,*.php,*.php3 vmap ;tr <tab>O<tab><tr><esc>:'><cr>o<tab></tr><esc>
@@ -381,7 +381,7 @@ command! -nargs=1 Silent
             \ | execute ':silent !'.<q-args>
             \ | execute ':redraw!'
 
-"noremap  <C-]>
+noremap  <C-]>
 "cnoremap  <CR>
 " :lolder to reopen old searches
 map <F1> :execute "lvimgrep! /" . @/ . "/j %" <Bar>botright lw<CR>
@@ -408,6 +408,16 @@ noremap <C-Right> :bn<cr>
 " noremap [C :bn<cr>
 map <leader>a :call setloclist(0,[{'bufnr': bufnr(''), 'lnum': line('.'), 'text': getline('.')}], 'a')<cr>
 map <leader>s :QuickfixsignsToggle<cr>
+let mapleader = ";"
+map [1;2B :winc j<cr>
+map [1;2A :winc k<cr>
+map [1;2D :winc h<cr>
+map [1;2C :winc l<cr>
+map ù :Vexplore<cr>
+map ² :Tlist<cr>
+map ù :MRUToggle<cr>
+map gOC :tabnext<cr>
+map gOD :tabprevious<cr>
 
 "set mouse=n
 set mouse=
@@ -585,6 +595,8 @@ let g:pymode_lint = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_options_max_line_length = 110
 let g:pymode_syntax = 1
+let g:jedi#show_call_signatures=0
+
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
