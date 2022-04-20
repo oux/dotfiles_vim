@@ -1,1 +1,1 @@
-/usr/share/vim/vim74/autoload/gzip.vim
+/usr/share/vim/vim81/autoload/gzip.vim
