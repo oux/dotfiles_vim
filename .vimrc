@@ -52,7 +52,7 @@ colorscheme manxome
 set hlsearch
 
 set showmatch
-"set scrolloff=10
+set scrolloff=5
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
 set nocompatible	" Use Vim defaults (much better!)
@@ -199,6 +199,8 @@ autocmd BufRead *.mk set ts=2
 autocmd BufRead *.mk set sw=2
 
 " commente/decommenter auto
+"autocmd BufEnter *.sh,*.pl,*rc,*.py vmap <C-/> :s/^\s*/&# /<CR>
+"autocmd BufEnter *.sh,*.pl,*rc,*.py vmap <C-/> :s/^\(\s*\)#[<TAB> ]\(.*\)/\1\2/<CR>
 autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;com :s/^\s*/&# /<CR>
 autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;uncom :s/^\(\s*\)#[<TAB> ]\(.*\)/\1\2/<CR>
 autocmd BufEnter *.htm,*.html,*.xml,*.wml vmap ;com :<backspace><backspace><backspace><cr>O<!--<esc>:'><cr>o--><esc>
@@ -282,6 +284,7 @@ map [25~ <S-F3>
 map [26~ <S-F4>
 cmap <Esc>b <S-Left>
 cmap <Esc>f <S-Right>
+cmap <Esc>d <S-Right><Right><C-w>
 "cmap <C-Right> <S-Right>
 "cmap <C-Left> <S-Left>
 
@@ -371,9 +374,6 @@ if &encoding =~ "utf-8"
     inoreab fete fête
     inoreab helene Hélène
     inoreab ;H häagen-dazs
-    inoreab urlfamille http://famille:famille@michoux.born2frag.org/famille/
-    inoreab urlparis http://b2f:b2f@michoux.born2frag.org/paris/
-    inoreab urlft http://ft:ft@michoux.born2frag.org/foyerft/
 endif
 
 
@@ -381,20 +381,29 @@ command! -nargs=1 Silent
             \ | execute ':silent !'.<q-args>
             \ | execute ':redraw!'
 
-noremap  <C-]>
+augroup help
+    autocmd FileType help nnoremap <buffer> <CR> <C-]>
+"     autocmd FileType help nnoremap <buffer> <BS> <C-T>
+"     autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
+"     autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
+"     autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+"     autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+"     autocmd FileType help setlocal nohlsearch
+augroup END
+
+"autocmd FileType help noremap  <C-]>
 "cnoremap  <CR>
 " :lolder to reopen old searches
-map <F1> :execute "lvimgrep! /" . @/ . "/j %" <Bar>botright lw<CR>
-map <S-F1> :execute "lvimgrep! /" . expand("<cword>") . "/j %" <Bar>botright lw<CR>
 "can be done with: :g/mypattern/caddexpr expand("%") . ":" . line(".") .  ":" . getline(".")
 " Search word on current buffer's directory
-map <F2> :execute "lvimgrep! /" . @/ . "/j %:h/*"  <Bar>botright lw<cr>
-map <S-F2> :execute "lvimgrep! /" . expand("<cword>") . "/j %:h/*"  <Bar>botright lw<cr>
+map <F2> :execute "Ggrep '" . @/ . "'"  <Bar>botright cw<cr>
+map <S-F2> :execute "Glgrep '" . expand("<cword>") . "'"  <Bar>botright cw<cr>
 " map <F3> :execute "silent lgrepadd! " . expand("<cword>") . " %:h/*" <Bar>:redraw! <Bar>botright lw<cr>
 " Search word on current vim's directory and all subdirectories
 map <F3> :execute "lvimgrep! /" . @/ . "/j **" <Bar>botright lw<CR>
 map <S-F3> :execute "lvimgrep! /" . expand("<cword>") . "/j **" <Bar>botright lw<CR>
-map <F4> :execute "lclose" <Bar> call setloclist(0,[])<CR>
+map <F4> <esc>:call ToggleQuickfixList()<CR>
+
 noremap <F5> :e!<cr>
 noremap <F6> :set list!<cr>:set list?<cr>
 noremap <F7> :set foldenable!<cr>:set foldenable?<cr>
@@ -413,7 +422,7 @@ map [1;2B :winc j<cr>
 map [1;2A :winc k<cr>
 map [1;2D :winc h<cr>
 map [1;2C :winc l<cr>
-map ù :Vexplore<cr>
+map ù :Lexplore<cr>
 map ² :Tlist<cr>
 map ù :MRUToggle<cr>
 map gOC :tabnext<cr>
@@ -574,7 +583,7 @@ function! s:align()
   endif
 endfunction
 
-let g:airline_theme = "oux"
+let g:airline_theme='kolor' "sweet colors
 
 """"""""""""""""""""""""""
 " python
@@ -595,8 +604,19 @@ let g:pymode_lint = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_options_max_line_length = 110
 let g:pymode_syntax = 1
-let g:jedi#show_call_signatures=0
+let g:pymode_breakpoint = 0
 
+let g:jedi#show_call_signatures=0
+" TODO: execute "poetry env info -p":
+let g:jedi#environment_path=".venv"
+if $VIRTUAL_ENV != ""
+    let g:jedi#environment_path=$VIRTUAL_ENV
+endif
+
+if stridx($PWD,"workspace") != -1
+    let g:MRU_File = ".vim_mru_files"
+    let MRU_Exclude_Files = '\.vimrc\|git-rebase-todo\|^/tmp.*\|COMMIT_EDITMSG'
+endif
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
@@ -610,3 +630,22 @@ if &term =~ '256color'
 endif
 
 set belloff=all
+set whichwrap+=>,l,<,h
+
+set noequalalways
+let maplocalleader = "\<Space>"
+" let g:vimspector_enable_mappings='HUMAN'
+
+function RemoveBounds()
+    " To goal is to paste the search register having a word \<WORD\> without \<
+    " \> chars
+    let searchreg = getreg("/")
+"    let line = getline(v:foldstart + 1)
+    let searchreg = substitute(searchreg, '\\<', '', 'g')
+    let searchreg = substitute(searchreg, '\\>', '', 'g')
+    call setreg("r", searchreg, "v")
+    call setreg('"', searchreg, "v")
+endfunction
+" bind with <C-/>:
+imap  <Esc>:call RemoveBounds()<CR>a
+nmap  :call RemoveBounds()<CR>
