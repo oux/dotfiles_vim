@@ -80,3 +80,18 @@
 [submodule ".vim/bundle/vimspector"]
 	path = .vim/bundle/vimspector
 	url = https://github.com/puremourning/vimspector
+[submodule ".vim/bundle/simple_highlighting"]
+	path = .vim/bundle/simple_highlighting
+	url = https://github.com/pevhall/simple_highlighting
+[submodule ".vim/bundle/fzf"]
+	path = .vim/bundle/fzf
+	url = https://github.com/junegunn/fzf
+[submodule ".vim/bundle/codelium"]
+	path = .vim/bundle/codeium
+	url = https://github.com/Exafunction/codeium.vim
+[submodule ".vim/bundle/fzf-preview"]
+	path = .vim/bundle/fzf-preview
+	url = https://github.com/yuki-yano/fzf-preview.vim
+[submodule ".vim/bundle/fzf-mru.vim"]
+	path = .vim/bundle/fzf-mru.vim
+	url = https://github.com/pbogut/fzf-mru.vim

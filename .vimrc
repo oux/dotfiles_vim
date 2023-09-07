@@ -381,17 +381,9 @@ command! -nargs=1 Silent
             \ | execute ':silent !'.<q-args>
             \ | execute ':redraw!'
 
-augroup help
-    autocmd FileType help nnoremap <buffer> <CR> <C-]>
-"     autocmd FileType help nnoremap <buffer> <BS> <C-T>
-"     autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
-"     autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
-"     autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
-"     autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
-"     autocmd FileType help setlocal nohlsearch
-augroup END
+let mapleader = ";"
+noremap <leader><cr> <C-]>
 
-"autocmd FileType help noremap  <C-]>
 "cnoremap  <CR>
 " :lolder to reopen old searches
 "can be done with: :g/mypattern/caddexpr expand("%") . ":" . line(".") .  ":" . getline(".")
@@ -417,14 +409,14 @@ noremap <C-Right> :bn<cr>
 " noremap [C :bn<cr>
 map <leader>a :call setloclist(0,[{'bufnr': bufnr(''), 'lnum': line('.'), 'text': getline('.')}], 'a')<cr>
 map <leader>s :QuickfixsignsToggle<cr>
-let mapleader = ";"
 map [1;2B :winc j<cr>
 map [1;2A :winc k<cr>
 map [1;2D :winc h<cr>
 map [1;2C :winc l<cr>
-map ù :Lexplore<cr>
+map <leader>f :NERDTreeToggle<cr>
 map ² :Tlist<cr>
-map ù :MRUToggle<cr>
+map <leader>ù :FZF<cr>
+map ù :FZFMru<cr>
 map gOC :tabnext<cr>
 map gOD :tabprevious<cr>
 
@@ -518,7 +510,7 @@ let g:CommandTMaxFiles=50000
 " set wildignore+=cts,out
 
 set nostartofline   " don't jump to first character when paging
-nmap <C-N> nzb
+nmap <C-B> nzb
 
 " Expand tabs for java
 autocmd FileType java setlocal expandtab
@@ -605,6 +597,8 @@ let g:pymode_lint_on_write = 0
 let g:pymode_options_max_line_length = 110
 let g:pymode_syntax = 1
 let g:pymode_breakpoint = 0
+let g:jedi#show_call_signatures=0
+let g:jedi#completions_command="<C-l>"
 
 let g:jedi#show_call_signatures=0
 " TODO: execute "poetry env info -p":
