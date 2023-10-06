@@ -69,7 +69,8 @@ set ruler		" show the cursor position all the time
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-set isfname=@,48-57,/,.,-,_,+,,,#,$,%,~
+set isfname=@,48-57,/,.,-,_,+,,,#,$,%,~,{,}
+" set isfname=@,48-57,/,.,-,_,+,,,#,$,%,~,=
 " set iskeyword=@,48-57,_
 set iskeyword=@,48-57,192-255,_
 
@@ -181,41 +182,13 @@ set nobackup
 syntax on
 
 autocmd BufRead *.votl set foldenable
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set ft=mail
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set nomodeline
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt*,*.txt,.signature* set noautoindent
-autocmd BufRead .followup,.article*,.letter,/tmp/mutt* normal ;vide
 
 " pour la prog avec mots clés
-autocmd BufRead *.html,*.htm set ft=html
-autocmd BufRead *.inc,*.php,*.php3 set ft=php
-autocmd BufRead *.c,*.h set ft=c
-autocmd BufRead *.sh set ft=sh
-autocmd BufRead *.pl set ft=perl
 autocmd BufRead *logcat* set ft=logcat
 autocmd BufRead *aplog* set ft=logcat
 autocmd BufRead *.mk set et
 autocmd BufRead *.mk set ts=2
 autocmd BufRead *.mk set sw=2
-
-" commente/decommenter auto
-"autocmd BufEnter *.sh,*.pl,*rc,*.py vmap <C-/> :s/^\s*/&# /<CR>
-"autocmd BufEnter *.sh,*.pl,*rc,*.py vmap <C-/> :s/^\(\s*\)#[<TAB> ]\(.*\)/\1\2/<CR>
-autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;com :s/^\s*/&# /<CR>
-autocmd BufEnter *.sh,*.pl,*rc,*.py vmap ;uncom :s/^\(\s*\)#[<TAB> ]\(.*\)/\1\2/<CR>
-autocmd BufEnter *.htm,*.html,*.xml,*.wml vmap ;com :<backspace><backspace><backspace><cr>O<!--<esc>:'><cr>o--><esc>
-autocmd BufEnter *.html,*.php,*.php3 vmap ;table :<backspace><backspace><backspace><cr>O<table><esc>:'><cr>o</table><esc>
-autocmd BufEnter *.html,*.php,*.php3 vmap ;tr <tab>O<tab><tr><esc>:'><cr>o<tab></tr><esc>
-autocmd BufEnter *.html,*.php,*.php3 vmap ;td <tab>O<tab><td><esc>:'><cr>o<tab></td><esc>
-autocmd BufEnter *.html,*.php,*.php3 vmap ;form <tab>O<tab><form action=\".\" method=get enctype=\"text/plain\"><esc>:'><cr>o<tab></form><esc>
-autocmd BufEnter *.php,*.php3 nnoremap gx yiw/^\(sub\<bar>function\)\s\+<C-R>"<CR>
-autocmd BufEnter *.vimrc vmap ;com :s/^/" /<CR>
-autocmd BufEnter *.vimrc vmap ;uncom :s/^"[<TAB> ]//<CR>
-autocmd BufEnter *.php,*.c,*.h,*.cc,*.C,*.H,*.hh,*.cpp,*.cxx,*.c++,*.y,*.l vmap ;com :s/^/\/\/ /g<CR>
-autocmd BufEnter *.php,*.c,*.h,*.cc,*.C,*.H,*.hh,*.cpp,*.cxx,*.c++,*.y,*.l vmap ;uncom :s/^\/\/[<TAB> ]//g<CR>
-" map!  <ESC>lxi
-" nnoremap  x
-" nnoremap  hx
 
 " backspace     
 " map! <S- > <M- >
@@ -243,21 +216,19 @@ nnoremap [4~ $
 "map! [4~ <esc>A
 
 "tabulation
-vnoremap <TAB> >
-vnoremap <S-TAB> <
-nnoremap <TAB> >>
-" nnoremap <ESC>[Z <<
-vnoremap <TAB> >
-" vnoremap <ESC>[Z <
-" vnoremap <SHIFT><TAB> <
-"inoremap  <esc>O
-"inoremap  <esc>o
+vnoremap <TAB> >gv
+vnoremap <S-TAB> <gv
+"nnoremap <TAB> >>
+"nnoremap <S-TAB> <<
+
+let mapleader = ";"
+set timeoutlen=300
 
 " Editer le .vimrc
-nnoremap ;v :split ~/.vimrc " <CR>:source ~/.vimrc<CR>
+nnoremap <leader>v :split ~/.vimrc<CR>
 " Reload le .vimrc sans quitter vim
 " autocmd BufLeave .vimrc :source ~/.vimrc<CR>
-" autocmd BufWritePost ~/.vimrc :source ~/.vimrc
+autocmd BufWritePost ~/.vimrc :source ~/.vimrc
 
 "marche pas sur deb apparement...
 " highlight Search      term=reverse ctermbg=3 guibg=Yellow
@@ -384,18 +355,8 @@ command! -nargs=1 Silent
 let mapleader = ";"
 noremap <leader><cr> <C-]>
 
-"cnoremap  <CR>
 " :lolder to reopen old searches
-"can be done with: :g/mypattern/caddexpr expand("%") . ":" . line(".") .  ":" . getline(".")
-" Search word on current buffer's directory
-map <F2> :execute "Ggrep '" . @/ . "'"  <Bar>botright cw<cr>
-map <S-F2> :execute "Glgrep '" . expand("<cword>") . "'"  <Bar>botright cw<cr>
-" map <F3> :execute "silent lgrepadd! " . expand("<cword>") . " %:h/*" <Bar>:redraw! <Bar>botright lw<cr>
-" Search word on current vim's directory and all subdirectories
-map <F3> :execute "lvimgrep! /" . @/ . "/j **" <Bar>botright lw<CR>
-map <S-F3> :execute "lvimgrep! /" . expand("<cword>") . "/j **" <Bar>botright lw<CR>
-map <F4> <esc>:call ToggleQuickfixList()<CR>
-
+map <F1> :execute "Rg ". expand("<cword>") <CR>
 noremap <F5> :e!<cr>
 noremap <F6> :set list!<cr>:set list?<cr>
 noremap <F7> :set foldenable!<cr>:set foldenable?<cr>
@@ -409,16 +370,18 @@ noremap <C-Right> :bn<cr>
 " noremap [C :bn<cr>
 map <leader>a :call setloclist(0,[{'bufnr': bufnr(''), 'lnum': line('.'), 'text': getline('.')}], 'a')<cr>
 map <leader>s :QuickfixsignsToggle<cr>
-map [1;2B :winc j<cr>
-map [1;2A :winc k<cr>
-map [1;2D :winc h<cr>
-map [1;2C :winc l<cr>
+map <silent> [1;2B :winc j<cr>
+map <silent> [1;2A :winc k<cr>
+map <silent> [1;2D :winc h<cr>
+map <silent> [1;2C :winc l<cr>
 map <leader>f :NERDTreeToggle<cr>
+map <silent> <leader>p :execute "set path=".expand("<cfile>").",".&path <cr> :set path?<cr>
 map ² :Tlist<cr>
 map <leader>ù :FZF<cr>
 map ù :FZFMru<cr>
 map gOC :tabnext<cr>
 map gOD :tabprevious<cr>
+" map <leader>q :FZF<cr>
 
 "set mouse=n
 set mouse=
@@ -622,6 +585,17 @@ if &term =~ '256color'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
+
+imap <silent> <Home> <Esc>:call <SID>toggle_start_line()<CR>i
+map <silent> <Home> :call <SID>toggle_start_line()<CR>
+
+function! s:toggle_start_line()
+  let position = col('.')
+  normal! ^
+  if col('.') == position
+    normal! 0
+  endif
+endfunction
 
 set belloff=all
 set whichwrap+=>,l,<,h
