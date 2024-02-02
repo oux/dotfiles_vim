@@ -98,3 +98,6 @@
 [submodule ".vim/bundle/fzf.vim"]
 	path = .vim/bundle/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
+[submodule ".vim/bundle/vim-nix"]
+	path = .vim/bundle/vim-nix
+	url = https://github.com/LnL7/vim-nix
