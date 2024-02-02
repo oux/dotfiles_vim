@@ -97,4 +97,4 @@
 	url = https://github.com/pbogut/fzf-mru.vim
 [submodule ".vim/bundle/fzf.vim"]
 	path = .vim/bundle/fzf.vim
-	url = https://github.com/oux/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
