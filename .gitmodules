@@ -86,9 +86,6 @@
 [submodule ".vim/bundle/fzf"]
 	path = .vim/bundle/fzf
 	url = https://github.com/junegunn/fzf
-[submodule ".vim/bundle/codelium"]
-	path = .vim/bundle/codeium
-	url = https://github.com/Exafunction/codeium.vim
 [submodule ".vim/bundle/fzf-preview"]
 	path = .vim/bundle/fzf-preview
 	url = https://github.com/yuki-yano/fzf-preview.vim

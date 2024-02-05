@@ -218,11 +218,11 @@ nnoremap [4~ $
 "tabulation
 vnoremap <TAB> >gv
 vnoremap <S-TAB> <gv
-"nnoremap <TAB> >>
-"nnoremap <S-TAB> <<
+nnoremap <TAB> >>
+nnoremap <S-TAB> <<
 
 let mapleader = ";"
-set timeoutlen=300
+" set timeoutlen=300
 
 " Editer le .vimrc
 nnoremap <leader>v :split ~/.vimrc<CR>
@@ -344,7 +344,7 @@ if &encoding =~ "utf-8"
     inoreab facon façon
     inoreab fete fête
     inoreab helene Hélène
-    inoreab ;H häagen-dazs
+    inoreab haag häagen-dazs
 endif
 
 
@@ -355,8 +355,25 @@ command! -nargs=1 Silent
 let mapleader = ";"
 noremap <leader><cr> <C-]>
 
+function! NERDTreeToggleInCurDir()
+    " If NERDTree is open in the current buffer
+    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+        exe ":NERDTreeClose"
+    else
+        if (expand("%:t") != '')
+            exe ":NERDTreeFind"
+        else
+            exe ":NERDTreeToggle"
+        endif
+    endif
+endfunction
+
+
 " :lolder to reopen old searches
-map <F1> :execute "Rg ". expand("<cword>") <CR>
+" map <F1> :execute "Rg ". expand("<cword>") <CR>
+command! -bang -nargs=* Rg  call fzf#vim#grep("rg --column --line-number --no-heading --color=always -uu --smart-case -- ".fzf#shellescape(<q-args>), fzf#vim#with_preview(), <bang>0)',
+noremap <C-S> :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -uu -- ".fzf#shellescape(expand("<cword>")), fzf#vim#with_preview({}, "up"), 1)<cr>
+vmap <C-S> :call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -uu -- ".fzf#shellescape(@*), fzf#vim#with_preview({}, "up"), 1)<cr>
 noremap <F5> :e!<cr>
 noremap <F6> :set list!<cr>:set list?<cr>
 noremap <F7> :set foldenable!<cr>:set foldenable?<cr>
@@ -374,11 +391,11 @@ map <silent> [1;2B :winc j<cr>
 map <silent> [1;2A :winc k<cr>
 map <silent> [1;2D :winc h<cr>
 map <silent> [1;2C :winc l<cr>
-map <leader>f :NERDTreeToggle<cr>
+map <leader>f :call NERDTreeToggleInCurDir()<cr>
 map <silent> <leader>p :execute "set path=".expand("<cfile>").",".&path <cr> :set path?<cr>
 map ² :Tlist<cr>
 map <leader>ù :FZF<cr>
-map ù :FZFMru<cr>
+map ù :FZFFreshMru<cr>
 map gOC :tabnext<cr>
 map gOD :tabprevious<cr>
 " map <leader>q :FZF<cr>
@@ -590,10 +607,10 @@ imap <silent> <Home> <Esc>:call <SID>toggle_start_line()<CR>i
 map <silent> <Home> :call <SID>toggle_start_line()<CR>
 
 function! s:toggle_start_line()
-  let position = col('.')
-  normal! ^
-  if col('.') == position
-    normal! 0
+  if col('.') == 1
+      normal! ^
+  else
+      normal! 0
   endif
 endfunction
 
@@ -617,3 +634,39 @@ endfunction
 " bind with <C-/>:
 imap  <Esc>:call RemoveBounds()<CR>a
 nmap  :call RemoveBounds()<CR>
+
+let NERDTreeShowHidden=1
+let NERDTreeShowBookmarks=1
+let NERDTreeNaturalSort=1
+
+
+function GlUrl()
+    let url = substitute(system("git -C ".expand('%:p:h')." remote get-url origin"), '\n', '', 'g')
+    let f = substitute(system("git -C ".expand('%:p:h')." ls-files --full-name " . expand('%:t')), '\n', '', 'g')
+    let remote_ref = system("git -C ".expand('%:p:h') ." rev-parse --abbrev-ref --symbolic-full-name @{u}")
+    if v:shell_error != 0
+        let remote_ref = system("git -C ".expand('%:p:h')." rev-parse HEAD")
+    endif
+    let remote_ref = substitute(substitute(remote_ref, '\n', '', 'g'), 'origin/', '', 'g')
+    echom url . "/-/blob/" . remote_ref . "/" . f . "#L" . line('.')
+endfunction
+nmap <silent> <leader>u :call GlUrl()<CR>
+" NIX
+
+au BufNewFile,BufRead *.nix :
+            \ set tabstop=2 |
+            \ set softtabstop=2 |
+            \ set shiftwidth=2 |
+            \ set textwidth=79 |
+            \ set expandtab |
+            \ set autoindent |
+            \ set fileformat=unix
+
+"let g:codeium_disable_bindings = 1
+"imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+"imap <C-;>   <Cmd>call codeium#CycleCompletions(1)<CR>
+"imap <C-,>   <Cmd>call codeium#CycleCompletions(-1)<CR>
+"imap <C-x>   <Cmd>call codeium#Clear()<CR>
+packadd! matchit
+packadd! taglist
+packadd! AlignPlugin
